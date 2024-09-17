@@ -52,3 +52,11 @@
         opacity: 1;
     }
 }
+
+.split-line {
+    width: 112px;
+    border: none;
+    border-bottom: 0.67px solid rgba(255, 255, 255, 0.04);
+    height: 1px;
+    margin: 12px 24px 12px 24px;
+}
