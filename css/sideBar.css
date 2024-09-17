@@ -1,0 +1,54 @@
+.sideBar {
+    position: relative;
+    left: 10px;
+    width: 135px;
+    height: 750px;
+    margin-top: 5px;
+}
+
+.sideBar-item {
+    display: flex;
+    align-items: center;
+    width: 128px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 5px;
+}
+
+
+.sideBar-img {
+    margin-left: 20px;
+    width: 24px;
+    height: 24px;
+    background-image: url(../src/sideBarBgcIcon.png);
+    background-size: cover;
+    margin-right: 10px;
+    opacity: 0.6;
+}
+
+.sideBar-item p {
+    color: white;
+    opacity: 0.6;
+    font-size: 14px;
+}
+
+.sideBar-item:hover {
+    background-color: rgba(128, 128, 128, 0.2);
+    border-radius: 12px;
+
+    .sideBar-img,
+    p {
+        opacity: 1;
+    }
+}
+
+.sideBar-active {
+    background-color: rgba(128, 128, 128, 0.2);
+    border-radius: 12px;
+
+    .sideBar-img,
+    p {
+        opacity: 1;
+    }
+}
