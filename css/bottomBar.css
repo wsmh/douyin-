@@ -1,0 +1,36 @@
+.bottomBar {
+    position: relative;
+    width: 160px;
+    height: 90px;
+    margin-top: 13px;
+    left: 0;
+    box-shadow: -11px -15px 20px 1px rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(99, 98, 98, 0.189);
+}
+
+.bottomBar-item {
+    display: flex;
+    align-items: center;
+    width: 128px;
+    height: 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 3px;
+    margin-left: 16px;
+}
+
+.bottomBar-item p {
+    color: white;
+    opacity: 0.6;
+    font-size: 14px;
+}
+
+.bottomBar-item:hover {
+    background-color: rgba(128, 128, 128, 0.2);
+    border-radius: 12px;
+
+    .sideBar-img,
+    p {
+        opacity: 1;
+    }
+}

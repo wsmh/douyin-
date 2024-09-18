@@ -1,0 +1,51 @@
+.swiper {
+    width: 1430px;
+    height: 740px;
+    outline: none;
+}
+
+.swiper-slide {
+    width: 1430px;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.video-con {
+    top: 70px;
+    left: 160px;
+    position: absolute;
+    background-color: rgba(128, 128, 128, 0.201);
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+}
+
+.control {
+    position: absolute;
+    width: 1430px;
+    bottom: 0;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 0 0 15px 15px;
+
+}
+
+.progress-line {
+    bottom: 40px;
+    width: 1430px;
+    height: 2px;
+    background-color: red;
+}
+
+.control-set {
+    height: 38px;
+    width: 1430px;
+    background-color: rgba(0, 0, 0, 0.112);
+    border-radius: 0 0 15px 15px;
+    display: flex;
+    flex-direction: row;
+}
