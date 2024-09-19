@@ -1,4 +1,4 @@
-const swiper = document.querySelector('.swiper-slide');
+const swiper = document.querySelectorAll('.swiper-slide');
 const videos = document.querySelectorAll('.swiper-wrapper video');
 let isPlay = true;
 
@@ -18,42 +18,48 @@ function getVideo() {
 }
 // 鼠标滚轮切换视频
 
-swiper.addEventListener('wheel', (e) => {
-    let video = getVideo();
-    video.pause();
-    if (e.deltaY > 0) {
-        mySwiper.slideNext();
-    }
-    else if (e.deltaY < 0) {
-        mySwiper.slidePrev();
-    }
-    video = getVideo();
-    video.play();
-    isPlay = true;
-})
-// 上下键切换视频,空格开关视频
-swiper.addEventListener('keydown', (e) => {
-    let video = getVideo();
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+swiper.forEach(function () {
+    this.addEventListener('wheel', (e) => {
+        let video = getVideo();
         video.pause();
-        if (e.key === 'ArrowDown') {
+        if (e.deltaY > 0) {
             mySwiper.slideNext();
         }
-        else if (e.key === 'ArrowUp') {
+        else if (e.deltaY < 0) {
             mySwiper.slidePrev();
         }
         video = getVideo();
         video.play();
         isPlay = true;
-    }
-    else if (e.key === ' ') {
-        togPlay(video);
-    }
-    e.preventDefault();
-
+    })
 })
-swiper.addEventListener('click', function () {
-    togPlay(getVideo());
+// 上下键切换视频,空格开关视频
+swiper.forEach(function () {
+    this.addEventListener('keydown', (e) => {
+        let video = getVideo();
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            video.pause();
+            if (e.key === 'ArrowDown') {
+                mySwiper.slideNext();
+            }
+            else if (e.key === 'ArrowUp') {
+                mySwiper.slidePrev();
+            }
+            video = getVideo();
+            video.play();
+            isPlay = true;
+        }
+        else if (e.key === ' ') {
+            togPlay(video);
+        }
+        e.preventDefault();
+
+    })
+})
+swiper.forEach(function () {
+    this.addEventListener('click', function () {
+        togPlay(getVideo());
+    })
 })
 
 $('.control-set').each(function () {
