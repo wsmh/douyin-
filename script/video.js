@@ -26,6 +26,7 @@ function renderPage() {
 
     })
 
+    let isDraging = false;
     let isPlay = false;
     const videoTogs = document.querySelectorAll('.video-tog');
     const video_page = document.querySelectorAll('.swiper-wrapper video');
@@ -162,6 +163,7 @@ function renderPage() {
         var mySwiper = new Swiper('.swiper', {
             direction: 'vertical', // 垂直切换选项
             loop: true, // 循环模式选项
+            allowTouchMove: false,      //如果不关闭,movedown/moveup获取不到鼠标左键
             on: {
                 slideChangeTransitionStart: function () {
                     danTexts[this.previousIndex].value = '';
@@ -267,8 +269,28 @@ function renderPage() {
             const totalTime = Number($('.video-tog')[mySwiper.realIndex].dataset.duration)
             const progressTime = totalTime * (progressNum / Number($(this).css('width').replace('px', '')))
             jumpToTime(progressTime);
+            console.log((progressNum / Number($(this).css('width').replace('px', ''))));
+
         })
 
+        $('body').mouseup(function (e) {
+            isDraging = false;
+            $('.progress-line-con').removeClass('progress-line-con-hover');
+        })
+
+        $('.progress-line-con').mousedown(function (e) {
+            e.preventDefault();     //记得阻止mousedown事件的冒泡,否则会出bug
+            isDraging = true;
+            $(this).addClass('progress-line-con-hover');
+        })
+        $('body').mousemove(function (e) {
+            if (isDraging) {
+                const progressNum = e.pageX - document.querySelector('.video-con').offsetLeft;
+                const totalTime = Number($('.video-tog')[mySwiper.realIndex].dataset.duration)
+                const progressTime = totalTime * (progressNum / Number($('.progress-line-con').css('width').replace('px', '')));
+                jumpToTime(progressTime);
+            }
+        })
 
         function getVideo() {
             return video_page[mySwiper.realIndex];
