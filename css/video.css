@@ -5,11 +5,19 @@
 }
 
 .swiper-slide {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: end;
+}
+
+.video-tog {
     width: 1430px;
-    height: 702px;
+    height: 704px;
     display: flex;
     justify-content: center;
     cursor: pointer;
+    position: relative;
 }
 
 .video-con {
@@ -23,21 +31,82 @@
 }
 
 .control {
-    position: absolute;
     width: 1430px;
     bottom: 0;
     height: 48px;
     display: flex;
     flex-direction: column;
     border-radius: 0 0 15px 15px;
+    position: relative;
+}
+
+
+.progress-line-con {
+    cursor: pointer;
+    z-index: 100;
+    position: absolute;
+    top: -5px;
+    height: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.progress-line-con:hover {
+    background-color: rgba(231, 231, 232, 0.443);
+
+    .progress-line {
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    .hasPlayed {
+        height: 8px;
+        background-color: white;
+    }
+
+    .light-circle {
+        display: flex;
+    }
 
 }
 
 .progress-line {
     bottom: 40px;
     width: 1430px;
-    height: 4px;
-    background-color: red;
+    height: 2px;
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(231, 231, 232, 0.345);
+    align-items: center;
+
+}
+
+.hasPlayed {
+    width: 0px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.47);
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.light-circle {
+    display: none;
+    position: absolute;
+    right: -11px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.082);
+    height: 22px;
+    width: 22px;
+    border: none;
+    border-radius: 11px;
+
+    div {
+        height: 12px;
+        width: 12px;
+        border-radius: 6px;
+        background-color: white;
+    }
 }
 
 .control-set {
@@ -62,6 +131,10 @@
     font-size: 15px;
     margin-left: 5px;
     white-space: nowrap;
+}
+
+.control-set svg {
+    cursor: pointer;
 }
 
 .danmuCon {
@@ -109,6 +182,9 @@
     width: 280px;
     font-size: 14px;
     border: none;
+    color: white;
+    text-indent: 5px;
+    outline: none;
 }
 
 .danText input::placeholder {
@@ -133,38 +209,102 @@
     flex-direction: row;
     margin-right: 17px;
     align-items: center;
+    cursor: pointer;
 
     p {
         white-space: nowrap;
         margin-left: 5px;
         font-size: 13px;
-        color: rgba(255, 255, 255, 0.991);
+        color: rgb(228, 228, 230);
+    }
+
+    .switch-btn {
+        width: 23px;
+        height: 14px;
+        border-radius: 12.5px;
+        border: none;
+        background-color: rgba(212, 211, 211, 0.957);
+        cursor: pointer;
+
+        .circle {
+            height: 9.5px;
+            width: 9.5px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.811);
+            padding: 0;
+            margin-left: -3.5px;
+            margin-top: -0.5px;
+            transition: margin-left 0.2s, margin-right 0.2s
+        }
+
     }
 }
 
-.btn-text-con button {
-    width: 23px;
-    height: 14px;
-    border-radius: 12.5px;
-    border: none;
-    background-color: rgba(212, 211, 211, 0.957);
 
-    .circle {
-        height: 9.5px;
-        width: 9.5px;
-        border-radius: 10px;
-        background-color: rgba(255, 255, 255, 0.811);
-        padding: 0;
-        margin-left: -3.5px;
-        margin-top: -0.5px;
+.btn-text-con-active {
+    display: flex;
+    flex-direction: row;
+    margin-right: 17px;
+    align-items: center;
+    cursor: pointer;
+
+    p {
+        white-space: nowrap;
+        margin-left: 5px;
+        font-size: 13px;
+        color: rgb(228, 228, 230);
+    }
+
+    .switch-btn {
+        width: 23px;
+        height: 14px;
+        border-radius: 12.5px;
+        border: none;
+        background-color: rgba(212, 211, 211, 0.957);
+        cursor: pointer;
+        background-image: linear-gradient(270deg, rgb(255, 37, 131), rgb(254, 16, 7));
+
+        .circle {
+            height: 9.5px;
+            width: 9.5px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.811);
+            padding: 0;
+            margin-left: 4.5px;
+            margin-top: -0.5px;
+            transition: margin-left 0.2s, margin-right 0.2s
+        }
+
     }
 }
 
-.text-con {
+.btn-text-con:hover p {
     color: white;
+}
+
+.btn-text-con-active:hover p {
+    color: white;
+}
+
+.text-con-qual,
+.text-con-speed {
+    color: rgb(228, 228, 230);
     font-size: 13px;
     margin-right: 17px;
     white-space: nowrap;
+}
+
+.text-con-qual {
+    cursor: pointer;
+}
+
+.text-con-speed {
+    cursor: default;
+}
+
+.text-con-qual:hover,
+.text-con-speed:hover {
+    color: white;
 }
 
 .video-set-con {
