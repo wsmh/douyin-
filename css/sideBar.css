@@ -28,6 +28,10 @@
     transition: all 0.3s;
     margin-top: 1px;
     margin-left: 6px;
+
+    img {
+        width: 130px;
+    }
 }
 
 

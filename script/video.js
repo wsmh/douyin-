@@ -1,36 +1,75 @@
-import { togVoice, videos, togDanmu } from "../data/video-data.js";
+import { togVoice, videos, togDanmu, changeVoice, voice_num } from "../data/video-data.js";
 import { secondsToTime } from "./util/util.js";
 
 function renderPage() {
     //渲染视频
-    videos.forEach((v) => {
+    videos.forEach((v, i) => {
         $('.swiper-wrapper').append(`
         <div class="swiper-slide">
-                        <div class="video-tog" tabindex="0"><video muted src="src/video/video-${v.id}.mp4"
-                                height="704"></video>
-                        </div>
-                        <div class="control">
-                            <div class="progress-line-con">
-                                <div class="progress-line">
-                                    <div class="hasPlayed">
-                                        <div class="light-circle"> <div></div> </div>
-                                    </div>
-                                    
-                                </div>
+            <div class='swiper-bgc'>
+                <div class="video-tog" tabindex="0">
+                    <video muted src="src/video/video-${v.id}.mp4" height="704"></video>
+                    <div class="video-btn">
+                            <div class="video-btn-avatar">
+                                <img src="../src/avatar.JPG">
+                                <div>+</div>
                             </div>
-                            
-                            <div class="control-set"></div>
+                            <div class="video-btn-item love-shape">
+                            <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="white" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                            </path>
+                            </svg>
+                            <p>7.7万</p>
+                            </div>
+                            <div class="video-btn-item comments">
+                            <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M44 6H4V36H13V41L23 36H44V6Z" fill="white" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 19.5V22.5" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 19.5V22.5" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 19.5V22.5" stroke="#333" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <p>733</p>
+                            </div>
+                            <div class="video-btn-item">
+                            <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.9986 5L17.8856 17.4776L4 19.4911L14.0589 29.3251L11.6544 43L23.9986 36.4192L36.3454 43L33.9586 29.3251L44 19.4911L30.1913 17.4776L23.9986 5Z" fill="#ffffff" stroke="#ffffff" stroke-width="1" stroke-linejoin="round"/></svg>
+                            <p>8779</p>
+                            </div>
+                            <div class="video-btn-item">
+                            <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26 4L44 22L26 39V28C12 28 6 43 6 43C6 26 11 15 26 15V4Z" fill="#ffffff" stroke="#ffffff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <p>5.7万</p>
+                            </div>
+                            <div class="video-btn-item">
+                            <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="6" width="36" height="36" rx="3" fill="#ffffff" stroke="#c9bdbd" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 24V16.2058L25.25 20.1029L32 24L25.25 27.8971L18.5 31.7942V24Z" fill="#020202" stroke="#050505" stroke-width="1" stroke-linejoin="round"/></svg>
+                            <p>看相关</p>
+                            </div>
+                            <div>
+                            <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="24" r="3" fill="#ffffff"/><circle cx="24" cy="24" r="3" fill="#ffffff"/><circle cx="36" cy="24" r="3" fill="#ffffff"/></svg>
+                            </div>
+                        </div>
+                </div>
+                <div class="control">
+                    <div class="progress-line-con">
+                        <div class="progress-line">
+                            <div class="hasPlayed">
+                                <div class="light-circle"> <div></div> </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="control-set"></div>
+                </div>
+            </div>                  
+        </div>
     `)
-
+        // 实时设置背景图,修改css里的变量,使用setProperty方法
+        const bgcSwiper = document.querySelectorAll('.swiper-bgc')[i];
+        bgcSwiper.style.setProperty('--bgcPath', `url(${v.coverPath})`);
     })
 
-    let isDraging = false;
+    //防止视频区按钮点击后暂停视频,取消其冒泡
+    $('.video-btn').click(function (e) {
+        e.stopPropagation();
+    })
+
+    let isDraging_prg = false;
+    let isDraging_volume = false;
     let isPlay = false;
     const videoTogs = document.querySelectorAll('.video-tog');
     const video_page = document.querySelectorAll('.swiper-wrapper video');
-    //获取时长
+    //获取时长与背景图
     const promises = [];    //获取时长需要时间,所以需要异步操作来进行
     document.querySelectorAll('.swiper-wrapper video').forEach((v) => {
         promises.push(new Promise((resolve) => {
@@ -42,6 +81,7 @@ function renderPage() {
     })
 
     Promise.all(promises).then(() => {
+
         //渲染视频控制栏
         $('.control-set').each(function () {
             $(this).append(`<div class="play-time-con"><svg class="switch-play" viewBox="0 0 32 32" fill="none" 
@@ -116,43 +156,65 @@ function renderPage() {
                                         </button>
                                         <p>清屏</p>
                                     </div>
-                                    <div class="text-con-qual">智能</div>
-                                    <div class="text-con-speed">倍速</div>
+                                    <div class="text-con-qual">
+                                        <p>智能</p>
+                                    </div>
+                                    <div class="text-con-speed">
+                                        <p>倍速</p>
+                                        <div class='float-opt speed-times'>
+                                            <div>0.75x</div>
+                                            <div>1.0x</div>
+                                            <div>1.25x</div>
+                                            <div>1.5x</div>
+                                            <div>1.75x</div>
+                                            <div>2.0x</div>
+                                            <div>3.0x</div>
+                                        </div>
+                                        
+                                    </div>
                                     <div class="video-set-con">
                                         <div class="video-icon">
                                             <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"
                                                 class="" viewBox="0 0 32 32">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                     d="M8.97 8.73C7.882 8.73 7 9.72 7 10.94v10.58c0 1.22.882 2.21 1.97 2.21h8.254A5.5 5.5 0 0 1 23 15.59v-4.65c0-1.22-.882-2.21-1.97-2.21H8.97zm4.723 10.464l3.822-2.451a1.025 1.025 0 0 0 0-1.743l-3.822-2.451c-.724-.464-1.693.035-1.693.871v4.902c0 .837.97 1.336 1.693.872z"
-                                                    fill="#fff" fill-opacity=".9"></path>
+                                                    fill="rgba(255,255,255,0.8)" fill-opacity=".9"></path>
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                     d="M22 25a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm.4-6a.9.9 0 1 0-1.8 0v2.5a.9.9 0 0 0 .9.9H24a.9.9 0 1 0 0-1.8h-1.6V19z"
-                                                    fill="#fff" fill-opacity=".9"></path>
+                                                    fill="rgba(255,255,255,0.8)" fill-opacity=".9"></path>
                                             </svg>
                                         </div>
-                                        <div class="video-icon voice">
+                                        <div class="video-icon volume-con">
                                             <svg viewBox="0 0 32 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg"
                                           width="1em" height="1em" focusable="false"
                                            style="font-size:32px"><path d="M9 12C7.89543 12 7 12.8955 7 14V18C7
                                             19.1046 7.89543 20 9 20H10L14.3598 23.6332C15.0111 24.176 16 23.7128 16 22.865V9.13509C16
-                                             8.28725 15.0111 7.8241 14.3598 8.36687L10 12H9Z" fill="white"></path>
+                                             8.28725 15.0111 7.8241 14.3598 8.36687L10 12H9Z" fill="rgba(255,255,255,0.8)"></path>
                                              <path d="M23.5006 20.5038L21.002 17.5496L18.5034 20.5038L17.0006 19.188L19.6942
                                               16.0033L17 12.8178L18.5028 11.502L21.002 14.457L23.5012 11.502L25.004 12.8178L22.3098
-                                               16.0033L25.0034 19.188L23.5006 20.5038Z" fill="white"></path></svg>
+                                               16.0033L25.0034 19.188L23.5006 20.5038Z" fill="rgba(255,255,255,0.8)"></path></svg>
+                                            <div class="float-opt-volume">
+                                                <div class="volume-num">0</div>
+                                                <div class="volume-line">
+                                                    <div class="volume-line-active">
+                                                    <div class="volume-control"></div>
+                                                    </div>
+                                                </div>  
+                                            </div>
                                         </div>
                                         <div class="video-icon"><svg width="32" height="32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg" class="" viewBox="0 0 32 32">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                     d="M9.75 8.5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12.5a2 2 0 0 0 2-2v-11a2 2 0 0 0-2-2H9.75zM15 11.25h-3.75a1 1 0 0 0-1 1V16h2v-2.75H15v-2zm5.75 9.5H17v-2h2.75V16h2v3.75a1 1 0 0 1-1 1z"
-                                                    fill="#fff"></path>
+                                                    fill="rgba(255,255,255,0.8)"></path>
                                             </svg></div>
                                         <div class="video-icon full-screen"><svg viewBox="0 0 32 32" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
                                                 focusable="false" style="font-size:32px">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                     d="M9.5 8C8.39543 8 7.5 8.89543 7.5 10V22C7.5 23.1046 8.39543 24 9.5 24H22.5C23.6046 24 24.5 23.1046 24.5 22V10C24.5 8.89543 23.6046 8 22.5 8H9.5ZM19.5 19H17.9986V21H20.5C21.0523 21 21.5 20.5523 21.5 20V17.5H19.5V19ZM12.5 19V17.5H10.5V20C10.5 20.5523 10.9477 21 11.5 21H13.9986V19H12.5ZM12.5 13H13.9986V11H11.5C10.9477 11 10.5 11.4477 10.5 12V14.5H12.5V13ZM19.5 13H17.9986V11H20.5C21.0523 11 21.5 11.4477 21.5 12V14.5H19.5V13Z"
-                                                    fill="white"></path>
+                                                    fill="rgba(255,255,255,0.8)"></path>
                                             </svg></div>
                                     </div>
 
@@ -174,8 +236,7 @@ function renderPage() {
         togPlay(getVideo());
         const danTexts = document.querySelectorAll('.danText input')
 
-        // 声音开关
-        $('.voice').click(togVoice);    //注意这里不要加括号,否则直接调用
+
 
         //滑块开关
         $('.btn-text-con').click(function () {
@@ -269,28 +330,122 @@ function renderPage() {
             const totalTime = Number($('.video-tog')[mySwiper.realIndex].dataset.duration)
             const progressTime = totalTime * (progressNum / Number($(this).css('width').replace('px', '')))
             jumpToTime(progressTime);
-            console.log((progressNum / Number($(this).css('width').replace('px', ''))));
-
         })
 
         $('body').mouseup(function (e) {
-            isDraging = false;
+            isDraging_prg = false;
+            isDraging_volume = false;
             $('.progress-line-con').removeClass('progress-line-con-hover');
         })
 
         $('.progress-line-con').mousedown(function (e) {
             e.preventDefault();     //记得阻止mousedown事件的冒泡,否则会出bug
-            isDraging = true;
+            isDraging_prg = true;
             $(this).addClass('progress-line-con-hover');
         })
         $('body').mousemove(function (e) {
-            if (isDraging) {
+            if (isDraging_prg) {
                 const progressNum = e.pageX - document.querySelector('.video-con').offsetLeft;
                 const totalTime = Number($('.video-tog')[mySwiper.realIndex].dataset.duration)
                 const progressTime = totalTime * (progressNum / Number($('.progress-line-con').css('width').replace('px', '')));
                 jumpToTime(progressTime);
             }
+
         })
+
+        //倍速播放
+        $('.speed-times div').click(function () {
+            const times = Number($(this).text().replace('x', ''));
+            getVideo().playbackRate = times;
+            $('.speed-times div').removeClass('speed-times-active');
+            $(this).addClass('speed-times-active');
+            $('.speed-times div').css('color', 'rgba(255,255,255,0.6)');
+            this.style.color = 'white';
+        })
+
+        $('.full-screen').click(function () {
+
+            document.querySelector('.swiper').requestFullscreen();
+
+        })
+
+
+        //调节音量
+
+        $('.float-opt-volume').mouseup(function (e) {
+
+            isDraging_volume = false;
+        })
+
+        $('.float-opt-volume').mousemove(function (e) {
+            if (isDraging_volume) {
+                const line = document.querySelector('.volume-line');
+                const distance = $('.volume-line').height() - (e.clientY - line.getBoundingClientRect().top);
+                if (distance <= 130 && distance >= 0) {
+                    //调节一个视频,所有视频音量都应改变
+                    const volume_num_percent = Math.floor((distance / Number($('.volume-line').height())) * 100);
+                    changeVoice(volume_num_percent);
+                    document.querySelectorAll('.volume-line').forEach(function (v) {
+                        v.firstElementChild.style.height = `${distance}px`;
+                    })
+                    document.querySelectorAll('.volume-num').forEach(function (v) {
+                        v.innerHTML = `${volume_num_percent}`;
+                    })
+                    document.querySelectorAll('video').forEach(function (v) {
+                        v.volume = volume_num_percent / 100;
+                    })
+
+                }
+            }
+        })
+
+        $('.volume-line').click(function (e) {
+            const distance = $(this).height() - (e.clientY - this.getBoundingClientRect().top);
+            if (distance <= 130 && distance >= 0) {
+                //调节一个视频,所有视频音量都应改变
+                const volume_num_percent = Math.floor((distance / Number($(this).height())) * 100);
+                changeVoice(volume_num_percent);
+                document.querySelectorAll('.volume-line').forEach(function (v) {
+                    v.firstElementChild.style.height = `${distance}px`;
+                })
+                document.querySelectorAll('.volume-num').forEach(function (v) {
+                    v.innerHTML = `${volume_num_percent}`;
+                })
+                document.querySelectorAll('.video-tog video').forEach(function (v) {
+                    v.volume = volume_num_percent / 100;
+                })
+            }
+
+        })
+        $('.volume-line').mousedown(function (e) {
+            isDraging_volume = true;
+            document.querySelectorAll('.video-tog video').forEach((v) => {
+                v.muted = false;
+            })
+
+            $(`<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+                width="1em" height="1em" focusable="false" style="font-size:32px">
+                <path
+                    d="M7 13.8669C7 12.7623 7.89543 11.8669 9 11.8669H10L14.3598 8.23369C15.0111 7.69092 16 8.15407 16 9.00191V22.7318C16 23.5797 15.0111 24.0428 14.3598 23.5L10 19.8669H9C7.89543 19.8669 7 18.9714 7 17.8669V13.8669Z"
+                    fill="rgba(255,255,255,0.8)"></path>
+                <path
+                    d="M18 18.8669L18 12.8669C19.6569 12.8669 21 14.21 21 15.8669C21 17.5237 19.6569 18.8669 18 18.8669Z"
+                    fill="rgba(255,255,255,0.8)"></path>
+                <path
+                    d="M25.25 15.8668C25.25 19.9791 22.0472 23.3432 18 23.601L18 21.0933C20.665 20.8415 22.75 18.5977 22.75 15.8668C22.75 13.136 20.665 10.8921 18 10.6403V8.13269C22.0472 8.3904 25.25 11.7546 25.25 15.8668Z"
+                    fill="rgba(255,255,255,0.8)"></path>
+            </svg>`).replaceAll('.volume-con svg')
+
+
+            e.preventDefault(); //修复bug
+
+        })
+
+        $('.volume-line').mouseup(function (e) {
+            isDraging_volume = false;
+        })
+
+
 
         function getVideo() {
             return video_page[mySwiper.realIndex];

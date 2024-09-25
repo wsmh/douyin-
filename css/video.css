@@ -1,7 +1,8 @@
 .swiper {
-    width: 1430px;
-    height: 750px;
+    width: 100%;
+    height: 100%;
     outline: none;
+    caret-color: transparent;
 }
 
 .swiper-slide {
@@ -11,16 +12,138 @@
     align-items: end;
 }
 
+.swiper-bgc {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    border-radius: 15px;
+}
+
+/* 背景图片且设置虚化,如若需不影响内容,则需要使用before */
+.swiper-bgc::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    /* 定义css变量,可在js里使用对应方法操作该变量 */
+    background-image: var(--bgcPath);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(100px);
+}
+
+.video-btn {
+    position: absolute;
+    z-index: 200;
+    right: 36px;
+    bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-btn-avatar {
+    position: relative;
+    margin-bottom: 30px;
+
+    img {
+        height: 40px;
+        width: 40px;
+        border-radius: 18px;
+        transition: transform 0.2s;
+    }
+
+    div {
+        bottom: -5px;
+        left: 12px;
+        position: absolute;
+        height: 18px;
+        width: 18px;
+        background-color: red;
+        border-radius: 9px;
+        text-align: center;
+        line-height: 16px;
+        color: white;
+        transition: transform 0.2s;
+        box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    img:hover {
+        transform: scale(1.1);
+    }
+
+    div:hover {
+        transform: scale(1.1);
+    }
+}
+
+.video-btn-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    p {
+        margin-top: 10px;
+        color: white;
+        font-size: 15px;
+        margin-bottom: 16px;
+    }
+
+    svg {
+        transition: fill-opacity 0.2s, fill 0.2s;
+        fill-opacity: 0.8;
+        /* 设置动画重心,底部不参与变化 */
+        transform-origin: center bottom;
+    }
+
+}
+
+/* keyframes name 定义一个动画 */
+@keyframes video-item-move {
+
+    33% {
+        transform: scale(1.2) rotate(-0.02turn);
+    }
+
+    77% {
+        transform: scale(1.2) rotate(0.01turn);
+    }
+
+    100% {
+        transform: scale(1.2) rotate(0);
+    }
+}
+
+
+.video-btn-item:hover {
+    svg {
+        /* animation: 动画名 持续时长 关键帧持续方式 forwards代表保留变化到100%时的状态 */
+        animation: video-item-move 0.5s forwards;
+        fill-opacity: 1;
+    }
+}
+
 .video-tog {
     width: 1430px;
     height: 704px;
     display: flex;
     justify-content: center;
     cursor: pointer;
-    position: relative;
 }
 
+
+
 .video-con {
+    width: 1430px;
+    height: 750px;
     top: 70px;
     left: 160px;
     position: absolute;
@@ -307,24 +430,185 @@
 
 .text-con-qual,
 .text-con-speed {
-    color: rgb(228, 228, 230);
-    font-size: 13px;
-    margin-right: 17px;
-    white-space: nowrap;
+    position: relative;
+
+    p {
+        color: rgb(228, 228, 230);
+        font-size: 13px;
+        margin-right: 17px;
+        white-space: nowrap;
+    }
+
 }
 
-.text-con-qual {
+.speed-times-active {
+    background-color: rgba(242, 242, 244, 0.1);
+}
+
+.text-con-qual p {
     cursor: pointer;
 }
 
-.text-con-speed {
+.text-con-speed p {
     cursor: default;
 }
 
 .text-con-qual:hover,
 .text-con-speed:hover {
-    color: white;
+
+    p {
+        color: white;
+    }
+
+    .float-opt {
+        display: flex;
+    }
 }
+
+.float-opt {
+    display: none;
+    z-index: 200;
+    top: -273px;
+    left: -24px;
+    height: 255px;
+    background-color: rgb(37, 38, 50);
+    position: absolute;
+    flex-direction: column;
+    border-radius: 10px;
+    width: 72px;
+    /* grid不能用justify-content,而是justify-items */
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 18px;
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 12px;
+        margin-top: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        width: 50px;
+        height: 30px;
+    }
+
+    div:hover {
+        background-color: rgba(242, 242, 244, 0.1);
+        ;
+    }
+}
+
+/* 透明的感应区域，覆盖按钮和悬浮窗的间隙, 自动继承hover */
+.float-opt::after {
+    display: block;
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    height: 10px;
+    width: 50px;
+    /* 根据悬浮窗的高度和位置调整 */
+    background: rgba(255, 255, 255, 0);
+    /* 透明 */
+}
+
+.float-opt:hover {
+    display: flex;
+}
+
+.volume-con {
+    position: relative;
+}
+
+.volume-con:hover {
+    .float-opt-volume {
+        display: flex;
+    }
+}
+
+.float-opt-volume {
+    display: none;
+    z-index: 200;
+    top: -192px;
+    left: -12px;
+    height: 186px;
+    background-color: rgb(37, 38, 50);
+    position: absolute;
+    flex-direction: column;
+    border-radius: 10px;
+    width: 50px;
+    /* grid不能用justify-content,而是justify-items */
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 0px;
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+    }
+}
+
+.float-opt-volume::after {
+    display: block;
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    height: 10px;
+    width: 50px;
+    /* 根据悬浮窗的高度和位置调整 */
+    background: rgba(255, 255, 255, 0);
+    /* 透明 */
+}
+
+.float-opt-volume:hover {
+    display: flex;
+}
+
+.volume-num {
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 14px;
+    margin-top: -20px;
+}
+
+
+
+.volume-line {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    position: relative;
+    margin-top: 10px;
+    height: 130px;
+    margin-bottom: -20px;
+    width: 5px;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.402);
+}
+
+.volume-line-active {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0px;
+    background-color: red;
+    border-radius: 3px;
+
+}
+
+.volume-control {
+    position: absolute;
+    top: -5px;
+    background-color: rgb(255, 255, 255);
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+}
+
+
 
 .video-set-con {
     display: flex;
@@ -335,4 +619,8 @@
 
 .video-icon {
     margin-right: 5px;
+
+    svg:hover path {
+        fill: white;
+    }
 }
