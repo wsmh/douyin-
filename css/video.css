@@ -137,9 +137,17 @@
     display: flex;
     justify-content: center;
     cursor: pointer;
+
 }
 
-
+.comments-con {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    width: 400px;
+    background-color: red;
+}
 
 .video-con {
     width: 1430px;

@@ -353,6 +353,23 @@ function renderPage() {
 
         })
 
+        $('.love-shape svg').click(function () {
+            if (this.children[0].style.fill === 'rgb(253, 55, 55)') {
+                this.children[0].style.fill = 'white';
+            }
+            else {
+                this.children[0].style.fill = 'rgb(253, 55, 55)';
+            }
+            console.log(this.children[0].style.fill);
+
+
+
+
+
+
+
+        })
+
         //倍速播放
         $('.speed-times div').click(function () {
             const times = Number($(this).text().replace('x', ''));
