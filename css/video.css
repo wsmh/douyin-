@@ -8,11 +8,13 @@
 .swiper-slide {
     display: flex;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
     align-items: end;
 }
 
 .swiper-bgc {
+    display: flex;
+    flex-direction: row;
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -55,7 +57,7 @@
     img {
         height: 40px;
         width: 40px;
-        border-radius: 18px;
+        border-radius: 20px;
         transition: transform 0.2s;
     }
 
@@ -66,7 +68,7 @@
         height: 18px;
         width: 18px;
         background-color: red;
-        border-radius: 9px;
+        border-radius: 20px;
         text-align: center;
         line-height: 16px;
         color: white;
@@ -131,22 +133,221 @@
     }
 }
 
+.video-main-interface {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
 .video-tog {
-    width: 1430px;
     height: 704px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.comments-con {
+    display: none;
+    flex-direction: column;
+    width: 400px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.16);
+}
+
+
+.comments-items {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    padding: 2px 5px 2px 5px;
+    border-bottom: 1px solid rgba(211, 211, 211, 0.075);
+}
+
+.comments-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.7);
+    flex: 1;
+    font-weight: 500;
+    font-size: 15px;
     cursor: pointer;
 
 }
 
-.comments-con {
+.comments-text {
+    color: rgba(255, 255, 255, 1);
+    cursor: default;
+    position: relative;
+}
+
+.comments-text::after {
+    content: "";
     position: absolute;
-    right: 0px;
-    top: 0px;
+    left: 25px;
+    bottom: -4px;
+    background-color: rgb(250, 9, 101);
+    height: 3px;
+    width: 30px;
+
+}
+
+.comments-item:hover {
+    color: rgba(255, 255, 255, 1);
+
+    svg path {
+        fill: rgba(255, 255, 255, 1);
+    }
+
+}
+
+.comments-bar-input {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-left: 20px;
+    background-color: rgba(255, 255, 255, 0.242);
+    padding: 0;
+    width: 365px;
+    border-radius: 12px;
+
+    input {
+        border: none;
+        color: white;
+        width: 250px;
+        height: 40px;
+        text-indent: 8px;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    input::placeholder {
+        color: rgba(202, 201, 201, 0.705);
+    }
+
+    input:focus {
+        caret-color: white;
+        outline: none;
+    }
+
+    .bar-input-images {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.comments-bar-input:hover {
+    background-color: rgba(255, 255, 255, 0.302);
+}
+
+.bar-input-image {
+    cursor: pointer;
+}
+
+.bar-input-image:hover {
+    svg path {
+        fill: rgba(255, 255, 255, 1);
+    }
+}
+
+.comments-content {
+    width: 100%;
     height: 100%;
-    width: 400px;
-    background-color: red;
+}
+
+.content-all {
+    margin-top: 15px;
+    padding-left: 10px;
+    color: white;
+    font-size: 13px;
+}
+
+.comments-bar {
+    width: 100%;
+    height: 80px;
+}
+
+.comments-users {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+}
+
+.comments-user {
+    display: flex;
+    flex-direction: row;
+}
+
+.user-special {
+    width: 320px;
+}
+
+.user-content {
+    margin-top: 5px;
+    width: 100%;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.888);
+    line-height: 20px;
+    font-family: PingFang SC, DFPKingGothicGB-Regular, sans-serif;
+
+}
+
+.user-address {
+    margin-top: 5px;
+    color: rgba(190, 190, 190, 0.945);
+    font-size: 12px;
+}
+
+.user-avatar {
+    width: 55px;
+    display: flex;
+    justify-content: center;
+    margin-left: 10px;
+
+    img {
+        width: 36px;
+        height: 36px;
+        border-radius: 18px;
+    }
+}
+
+.user-name {
+    color: rgba(190, 190, 190, 0.945);
+    font-size: 13px;
+}
+
+.user-operates {
+    display: flex;
+    flex-direction: row;
+}
+
+.user-operate {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    line-height: 13px;
+    margin-right: 10px;
+    margin-top: 5px;
+    cursor: pointer;
+
+    p {
+        color: rgba(190, 190, 190, 0.945);
+        margin-left: 1px;
+        font-size: 13px;
+    }
+}
+
+.user-operate:hover {
+    svg path {
+        fill-opacity: 1;
+    }
+
+    p {
+        color: white;
+    }
 }
 
 .video-con {
@@ -162,7 +363,7 @@
 }
 
 .control {
-    width: 1430px;
+    width: 100%;
     bottom: 0;
     height: 48px;
     display: flex;
@@ -174,6 +375,7 @@
 
 .progress-line-con {
     cursor: pointer;
+    width: 100%;
     z-index: 100;
     position: absolute;
     top: -5px;
@@ -218,7 +420,7 @@
 
 .progress-line {
     bottom: 40px;
-    width: 1430px;
+    width: 100%;
     height: 2px;
     display: flex;
     flex-direction: row;
@@ -261,10 +463,11 @@
 
 .control-set {
     height: 44px;
-    width: 1430px;
+    width: 100%;
     background-color: rgba(0, 0, 0, 0.112);
     border-radius: 0 0 15px 15px;
     display: flex;
+    position: relative;
     flex-direction: row;
     align-items: center;
 }
@@ -348,9 +551,10 @@
 
 .play-set {
     display: flex;
+    position: absolute;
     flex-direction: row;
     align-items: center;
-    margin-left: 500px;
+    right: 10px;
 }
 
 
