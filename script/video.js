@@ -620,9 +620,36 @@ function renderPage() {
                 this.style.color = 'white';
             })
 
+
+            function toggleFullScreen(e) {
+                if (document.fullscreenElement || document.msFullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement ? true : false) {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                    } else if (document.webkitCancelFullScreen) {
+                        document.webkitCancelFullScreen();
+                    } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                    }
+                } else {
+                    if (e.requestFullscreen) {
+                        e.requestFullscreen();
+                    }/*FireFox */ else if (e.mozRequestFullScreen) {
+                        e.mozRequestFullScreen();
+                    }/*Chrome等 */ else if (e.webkitRequestFullScreen) {
+                        e.webkitRequestFullScreen();
+                    }/*IE11*/ else if (e.msRequestFullscreen) {
+                        e.msRequestFullscreen();
+                    }
+
+                }
+            }
+
             $('.full-screen').click(function () {
 
-                document.querySelector('.swiper').requestFullscreen();
+                const mm = document.querySelector('.swiper');
+                toggleFullScreen(mm);
 
             })
 
