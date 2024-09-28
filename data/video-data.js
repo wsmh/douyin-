@@ -31,6 +31,7 @@ export const videos = [
     },
 ]
 
+
 export function togVoice() {
 
     const voice = document.querySelectorAll('.volume-con')

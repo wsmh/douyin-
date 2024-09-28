@@ -10,6 +10,7 @@
     justify-content: center;
     flex-direction: row;
     align-items: end;
+    outline: none;
 }
 
 .swiper-bgc {
@@ -48,6 +49,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    user-select: none;
 }
 
 .video-btn-avatar {
@@ -125,6 +127,7 @@
 }
 
 
+
 .video-btn-item:hover {
     svg {
         /* animation: 动画名 持续时长 关键帧持续方式 forwards代表保留变化到100%时的状态 */
@@ -135,12 +138,13 @@
 
 .video-main-interface {
     display: flex;
+    height: 100%;
     width: 100%;
     flex-direction: column;
 }
 
 .video-tog {
-    height: 704px;
+    height: 94%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -271,9 +275,15 @@
 
 .comments-users {
     width: 100%;
+    height: 570px;
     display: flex;
     flex-direction: column;
     margin-top: 8px;
+    overflow-y: scroll;
+
+    /* 修改滑块样式 */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(124, 124, 124, 0.605) rgba(0, 0, 0, 0);
 }
 
 .comments-user {
@@ -322,6 +332,7 @@
 .user-operates {
     display: flex;
     flex-direction: row;
+    user-select: none;
 }
 
 .user-operate {
@@ -351,8 +362,8 @@
 }
 
 .video-con {
-    width: 1430px;
-    height: 750px;
+    width: 86%;
+    height: 90%;
     top: 70px;
     left: 160px;
     position: absolute;
@@ -362,10 +373,12 @@
     border-radius: 15px;
 }
 
+
+
 .control {
     width: 100%;
     bottom: 0;
-    height: 48px;
+    height: 6%;
     display: flex;
     flex-direction: column;
     border-radius: 0 0 15px 15px;
@@ -462,7 +475,7 @@
 }
 
 .control-set {
-    height: 44px;
+    height: 100%;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.112);
     border-radius: 0 0 15px 15px;
@@ -834,5 +847,24 @@
 
     svg:hover path {
         fill: white;
+    }
+}
+
+
+/* 媒体样式应该放在所有样式之后 */
+@media screen and (max-width:1100px) {
+
+    .btn-text-con,
+    .text-con-qual,
+    .text-con-speed {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width:1500px) {
+    .video-tog video {
+        height: auto;
+        width: 100%;
     }
 }
