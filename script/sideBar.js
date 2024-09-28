@@ -1,5 +1,6 @@
 import { icons } from "../data/sideBarActiveIcons.js";
 const sideBar_item = document.querySelectorAll('.sideBar-item');
+const olym = document.querySelector('.sideBar-item-o');
 sideBar_item.forEach((item) => {
     item.addEventListener('click', () => {
         sideBar_item.forEach((i) => {
@@ -25,8 +26,18 @@ sideBar_item.forEach((item) => {
         item.appendChild(refreshIcon);
 
         item.firstElementChild.style.backgroundPositionX = icons[item.dataset.iconName + '-a'] + 'px';       //应为firstElementChild而非firstChild
+        olym.classList.remove('sideBar-active');
         item.classList.add('sideBar-active');
 
 
     })
+})
+document.querySelector('.sideBar-item-o').addEventListener('click', function () {
+    this.classList.add('sideBar-active');
+
+    sideBar_item.forEach((i) => {
+        i.classList.remove('sideBar-active');
+        i.firstElementChild.style.backgroundPositionX = icons[i.dataset.iconName] + 'px';
+    })
+
 })

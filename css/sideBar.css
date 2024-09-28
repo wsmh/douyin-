@@ -21,7 +21,8 @@
     /* Chrome Safari */
 }
 
-.sideBar-item {
+.sideBar-item,
+.sideBar-item-o {
     display: flex;
     align-items: center;
     width: 128px;
@@ -58,13 +59,17 @@
     opacity: 0.5;
 }
 
-.sideBar-item p {
+.sideBar-item p,
+.sideBar-item-o p {
     color: white;
     opacity: 0.6;
     font-size: 14px;
+    white-space: nowrap;
 }
 
-.sideBar-item:hover {
+
+.sideBar-item:hover,
+.sideBar-item-o:hover {
     background-color: rgba(128, 128, 128, 0.2);
     border-radius: 12px;
 

@@ -1,4 +1,4 @@
-import { togVoice, videos, togDanmu, changeVoice, voice_num } from "../data/video-data.js";
+import { videos, togDanmu, changeVoice } from "../data/video-data.js";
 import { secondsToTime } from "./util/util.js";
 
 function renderPage() {
