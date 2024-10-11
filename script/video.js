@@ -10,7 +10,7 @@ function renderPage() {
 
                 <div class="video-main-interface">
                     <div class="video-tog" tabindex="0">
-                        <video muted src="src/video/video-${v.id}.mp4" height="100%"></video>
+                        <video muted src="src/video/video-${v.id}.mp4""></video>
                         <div class="video-btn">
                                 <div class="video-btn-avatar">
                                     <img src="../src/avatar.JPG">
@@ -299,6 +299,7 @@ function renderPage() {
     let isPlay = false;
     const videoTogs = document.querySelectorAll('.video-tog');
     const video_page = document.querySelectorAll('.swiper-wrapper video');
+    let videoVolume = 0;
     //获取时长与背景图
     const promises = [];    //获取时长需要时间,所以需要异步操作来进行
     document.querySelectorAll('.swiper-wrapper video').forEach((v) => {
@@ -552,7 +553,7 @@ function renderPage() {
                 const totalTime = Number($('.video-tog')[mySwiper.realIndex].dataset.duration)
                 $('.video-time-text')[mySwiper.realIndex].innerHTML = `
                 ${secondsToTime(curTime)} / `;
-                $('.hasPlayed')[mySwiper.realIndex].style.width = `${(curTime / totalTime) * 1430}px`
+                $('.hasPlayed')[mySwiper.realIndex].style.width = `${(curTime / totalTime) * 100}%`
             }, 300);
 
             //进度条事件
@@ -675,7 +676,7 @@ function renderPage() {
                         document.querySelectorAll('.volume-num').forEach(function (v) {
                             v.innerHTML = `${volume_num_percent}`;
                         })
-                        document.querySelectorAll('video').forEach(function (v) {
+                        document.querySelectorAll('.video-tog video').forEach(function (v) {
                             v.volume = volume_num_percent / 100;
                         })
 
@@ -697,6 +698,7 @@ function renderPage() {
                     })
                     document.querySelectorAll('.video-tog video').forEach(function (v) {
                         v.volume = volume_num_percent / 100;
+                        v.muted = false;
                     })
                 }
 
@@ -733,18 +735,17 @@ function renderPage() {
             $('.comments').click(function () {
                 const thisVideo = mySwiper.realIndex;
 
-                if ($('.comments-con')[thisVideo].style.display === 'block') {
-                    $('.video-main-interface')[thisVideo].style.width = '1430px';
+                if ($('.comments-con')[thisVideo].style.display === 'flex') {
+                    $('.video-main-interface')[thisVideo].style.width = '100%';
                     $('.comments-con')[thisVideo].style.display = 'none';
-                    $('.video-tog video')[thisVideo].height = "100%";
-                    $('.video-btn')[thisVideo].style.right = '36px';
+                    $('.video-tog video')[thisVideo].style.height = "100%";
 
                 }
                 else {
-                    $('.video-main-interface')[thisVideo].style.width = '1030px';
+                    $('.video-main-interface')[thisVideo].style.width = '72%';
                     $('.comments-con')[thisVideo].style.display = 'flex';
-                    $('.video-tog video')[thisVideo].height = "580";
-                    $('.video-btn')[thisVideo].style.right = '415px';
+                    $('.video-tog video')[thisVideo].style.height = "auto";
+                    $('.video-tog video')[thisVideo].style.width = "100%";
                 }
 
 
@@ -752,10 +753,9 @@ function renderPage() {
 
             $('.comments-quit').click(function () {
                 const thisVideo = mySwiper.realIndex;
-                $('.video-main-interface')[thisVideo].style.width = '1430px';
+                $('.video-main-interface')[thisVideo].style.width = '100%';
                 $('.comments-con')[thisVideo].style.display = 'none';
-                $('.video-tog video')[thisVideo].height = "704";
-                $('.video-btn')[thisVideo].style.right = '36px';
+                $('.video-tog video')[thisVideo].style.height = "100%";
             })
 
             //评论功能
@@ -818,40 +818,41 @@ function renderPage() {
             function getVideo() {
                 return video_page[mySwiper.realIndex];
             }
+            function togPlay(video) {
+                if (isPlay) {
+                    video.pause();
+                    isPlay = false;
+                    $('.switch-play').html(`<svg class="switch-play" viewBox="0 0 32 32" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg" width="32" height="32" focusable="false"
+                                            style="font-size:32px">
+                                            <path
+                                                d="M23.5 15.134C24.1667 15.5189 24.1667 16.4811 23.5 16.866L12.25 23.3612C11.5833 23.7461 10.75 23.265 10.75 22.4952L10.75 9.50481C10.75 8.73501 11.5833 8.25388 12.25 8.63878L23.5 15.134Z"
+                                                fill="white"></path>
+                                        </svg>`)
+                }
+                else {
+                    video.play();
+                    isPlay = true;
+                    $('.switch-play').html(`<svg class="switch-play" viewBox="0 0 32 32" fill="none" 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="32" height="32" focusable="false" style="font-size:32px">
+                <path d="M10 8C9.44772 8 9 8.44772 9 9V23C9 23.5523 9.44772 24 10 
+                24H13C13.5523 24 14 23.5523 14 23V9C14 8.44772 13.5523 8 13 8H10Z" 
+                fill="white"></path><path d="M19 8C18.4477 8 18 8.44772 18 9V23C18 23.5523 
+                18.4477 24 19 24H22C22.5523 24 23 23.5523 23 23V9C23 8.44772 22.5523 8 22 8H19Z" 
+                fill="white"></path></svg>`)
+                }
+            }
+
+            function jumpToTime(time) {
+                getVideo().currentTime = time;
+            }
         }
 
         renderControl();
 
 
-        function togPlay(video) {
-            if (isPlay) {
-                video.pause();
-                isPlay = false;
-                $('.switch-play').html(`<svg class="switch-play" viewBox="0 0 32 32" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg" width="32" height="32" focusable="false"
-                                        style="font-size:32px">
-                                        <path
-                                            d="M23.5 15.134C24.1667 15.5189 24.1667 16.4811 23.5 16.866L12.25 23.3612C11.5833 23.7461 10.75 23.265 10.75 22.4952L10.75 9.50481C10.75 8.73501 11.5833 8.25388 12.25 8.63878L23.5 15.134Z"
-                                            fill="white"></path>
-                                    </svg>`)
-            }
-            else {
-                video.play();
-                isPlay = true;
-                $('.switch-play').html(`<svg class="switch-play" viewBox="0 0 32 32" fill="none" 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="32" height="32" focusable="false" style="font-size:32px">
-            <path d="M10 8C9.44772 8 9 8.44772 9 9V23C9 23.5523 9.44772 24 10 
-            24H13C13.5523 24 14 23.5523 14 23V9C14 8.44772 13.5523 8 13 8H10Z" 
-            fill="white"></path><path d="M19 8C18.4477 8 18 8.44772 18 9V23C18 23.5523 
-            18.4477 24 19 24H22C22.5523 24 23 23.5523 23 23V9C23 8.44772 22.5523 8 22 8H19Z" 
-            fill="white"></path></svg>`)
-            }
-        }
 
-        function jumpToTime(time) {
-            getVideo().currentTime = time;
-        }
 
 
 

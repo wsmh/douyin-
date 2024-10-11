@@ -1,14 +1,17 @@
 .totalCon {
     height: 100%;
+    width: 100%;
     background-color: rgb(22, 24, 35);
     background-image: url('../src/bgc.png');
     background-repeat: no-repeat;
     border-radius: 7px;
 }
 
+html,
 body {
     padding: 0;
     height: 100%;
+    width: 100%;
     margin: 0;
     overflow: hidden;
 }

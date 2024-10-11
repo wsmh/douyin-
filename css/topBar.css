@@ -2,11 +2,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 65px;
 }
 
 .logo {
-    margin-left: 20px;
+    margin-left: 1.5%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,7 +28,7 @@
 }
 
 .searchBar-pos {
-    width: 800px;
+    width: 50%;
     display: flex;
     justify-content: end;
 }
@@ -40,9 +39,9 @@
     justify-content: space-around;
     align-items: center;
     border-radius: 13px;
-    height: 40px;
-    width: 450px;
-    margin-right: 50px;
+    height: 80%;
+    width: 60%;
+    margin-right: 5%;
 }
 
 .searchBar input {

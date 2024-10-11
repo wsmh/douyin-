@@ -1,9 +1,9 @@
 .sideBar {
     position: relative;
     left: 10px;
-    width: 160px;
-    height: 660px;
-    margin-top: 5px;
+    width: 10%;
+    height: 40em;
+    margin-top: 0.5%;
     overflow-y: scroll;
     overflow-x: scroll;
     /* 隐藏滚动条 */
@@ -25,15 +25,15 @@
 .sideBar-item-o {
     display: flex;
     align-items: center;
-    width: 128px;
-    height: 40px;
+    width: 75%;
+    height: 6%;
     cursor: pointer;
     transition: all 0.3s;
-    margin-top: 1px;
+    margin-top: 1%;
     margin-left: 6px;
 
     img {
-        width: 130px;
+        width: 100%;
     }
 
 }
